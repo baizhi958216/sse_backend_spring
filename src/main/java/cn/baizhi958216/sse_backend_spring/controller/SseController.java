@@ -1,6 +1,7 @@
 package cn.baizhi958216.sse_backend_spring.controller;
 
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class SseController {
     }
 
     @GetMapping("/sendEvent")
+    @Scheduled(fixedDelay = 1000)
     public void sendEvent(){
         this.sendMessage("我永远喜欢爱莉希雅 " + new Date());
     }
