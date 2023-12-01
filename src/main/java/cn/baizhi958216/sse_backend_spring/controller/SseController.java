@@ -21,7 +21,7 @@ public class SseController {
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter handleSse() {
-        SseEmitter emitter = new SseEmitter();
+        SseEmitter emitter = new SseEmitter(10000L);
 
         // 添加新的 emitter 到列表
         emitters.add(emitter);
@@ -44,7 +44,7 @@ public class SseController {
         for (SseEmitter emitter : emitters) {
             try {
                 // 发送消息
-                emitter.send(SseEmitter.event().data(message));
+                emitter.send(SseEmitter.event().reconnectTime(1000L).data(message).name("elysia"));
             } catch (IOException e) {
                 // 发送失败时移除 emitter
                 emitters.remove(emitter);
